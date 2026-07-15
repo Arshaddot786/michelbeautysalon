@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michel Salon — Manama, Bahrain</title>
+<meta name="description" content="Michel Salon — a premium hairstyling, manicure, pedicure and extensions studio in the Diplomatic Area, Manama.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#FAF5EF;
+    --canvas-warm:#F3EAE0;
+    --canvas-deep:#1E1710;
+    --canvas-deep-2:#241B13;
+    --ink:#2A2019;
+    --ink-soft:#6E5F52;
+    --ink-faint:#9C8C7C;
+    --on-dark:#F6EEE4;
+    --on-dark-soft:#C9B9A6;
+    --rose:#B3566B;
+    --rose-deep:#8F3E52;
+    --gold:#C6A15B;
+    --gold-soft:#E4CFA0;
+    --card:#FFFFFF;
+    --hairline:#E6DACB;
+    --hairline-dark:#3A2E22;
+    --shadow-soft: 0 20px 60px -25px rgba(42,32,25,0.35);
+    --shadow-card: 0 12px 32px -18px rgba(42,32,25,0.28);
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,video{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  .container{max-width:1240px;margin:0 auto;padding:0 32px;}
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    font-weight:400;
+    color:var(--ink);
+    letter-spacing:0.2px;
+  }
+
+  .eyebrow{
+    font-family:'Manrope',sans-serif;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--rose-deep);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:28px;height:1px;
+    background:var(--gold);
+  }
+  .on-dark .eyebrow{ color:var(--gold-soft); }
+  .on-dark .eyebrow::before{ background:var(--gold); }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .9s var(--ease), transform .9s var(--ease);
+  }
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.1s;}
+  .reveal-delay-2{transition-delay:.22s;}
+  .reveal-delay-3{transition-delay:.34s;}
+  .reveal-delay-4{transition-delay:.46s;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:22px 0;
+    transition:padding .4s var(--ease);
+  }
+  header::before{
+    content:'';
+    position:absolute; inset:0; z-index:-1;
+    opacity:0;
+    transition:opacity .4s var(--ease);
+  }
+  header.scrolled{padding:14px 0;}
+  header.scrolled::before{
+    opacity:1;
+    background:rgba(250,245,239,0.86);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    box-shadow:0 1px 0 var(--hairline);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;}
+  .wordmark{
+    font-family:'Fraunces',serif;
+    font-size:22px;
+    letter-spacing:4px;
+    color:var(--on-dark);
+    display:flex;
+    flex-direction:column;
+    line-height:1;
+  }
+  .wordmark small{
+    font-family:'Manrope',sans-serif;
+    font-size:9px;
+    letter-spacing:3px;
+    color:var(--gold-soft);
+    font-weight:600;
+    margin-top:6px;
+  }
+  header.scrolled .wordmark{color:var(--ink);}
+  header.scrolled .wordmark small{color:var(--rose-deep);}
+
+  .nav-links{display:flex;gap:40px;align-items:center;}
+  .nav-links a{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--on-dark-soft);
+    position:relative;
+    padding:4px 0;
+    transition:color .3s;
+  }
+  header.scrolled .nav-links a{color:var(--ink-soft);}
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:0;height:1px;width:0;
+    background:var(--gold);transition:width .35s var(--ease);
+  }
+  .nav-links a:hover{color:var(--on-dark);}
+  header.scrolled .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{width:100%;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-family:'Manrope',sans-serif;
+    font-size:12.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    padding:15px 30px;border-radius:999px;
+    cursor:pointer;border:1px solid transparent;
+    transition:transform .35s var(--ease), background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .btn-gold{
+    background:linear-gradient(135deg, var(--gold) 0%, #B78943 100%);
+    color:#241B10;
+    box-shadow:0 10px 24px -10px rgba(198,161,91,0.55);
+  }
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 30px -10px rgba(198,161,91,0.65);}
+  .btn-outline-dark{
+    border-color:rgba(246,238,228,0.45); color:var(--on-dark);
+  }
+  .btn-outline-dark:hover{background:rgba(246,238,228,0.1); border-color:var(--on-dark);}
+  .btn-outline-light{
+    border-color:var(--ink); color:var(--ink);
+  }
+  .btn-outline-light:hover{background:var(--ink); color:var(--on-dark);}
+
+  .nav-cta{display:none;}
+  @media(min-width:960px){.nav-cta{display:inline-flex;}}
+  @media(min-width:960px){.nav-cta-mobile-only{display:none !important;}}
+
+  .burger{display:flex;flex-direction:column;gap:5px;cursor:pointer;z-index:200;}
+  .burger span{width:24px;height:1.5px;background:var(--on-dark);transition:.3s;}
+  header.scrolled .burger span{background:var(--ink);}
+  @media(min-width:960px){.burger{display:none;}}
+  @media(max-width:959px){
+    .nav-links{
+      position:fixed; inset:0; background:var(--canvas-deep);
+      flex-direction:column; justify-content:center; gap:34px;
+      transform:translateX(100%); transition:transform .5s var(--ease);
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-links a{color:var(--on-dark); font-size:16px;}
+    .nav-links .nav-cta{display:inline-flex;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:100vh;
+    display:flex; align-items:center;
+    padding-top:120px;
+    background:var(--canvas-deep);
+    overflow:hidden;
+  }
+  .hero-bg-video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0.55;
+  }
+  .hero-bg-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,14,9,0.55) 0%, rgba(20,14,9,0.35) 38%, rgba(20,14,9,0.88) 100%);
+  }
+  .hero-inner{
+    position:relative; z-index:2;
+    width:100%;
+    padding-bottom:100px;
+    padding-top:60px;
+  }
+
+  .hero h1{
+    color:var(--on-dark);
+    font-size:clamp(40px,6vw,78px);
+    font-weight:300;
+    line-height:1.06;
+    letter-spacing:0.5px;
+    max-width:820px;
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:400;
+    background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lede{
+    margin-top:24px; max-width:460px;
+    color:var(--on-dark-soft); font-size:16.5px; font-weight:300;
+  }
+  .hero .hero-ctas{margin-top:36px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+
+  .rating-badge{
+    display:inline-flex; align-items:center; gap:14px;
+    background:rgba(30,23,16,0.55);
+    border:1px solid rgba(246,238,228,0.18);
+    backdrop-filter:blur(14px) saturate(160%);
+    -webkit-backdrop-filter:blur(14px) saturate(160%);
+    border-radius:999px;
+    padding:10px 22px 10px 10px;
+    color:var(--on-dark);
+  }
+  .rating-badge .rb-score{
+    width:40px;height:40px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--rose));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:15px;color:#231A11;flex:none;
+  }
+  .rating-badge .rb-text{font-size:12.5px;line-height:1.35;}
+  .rating-badge .rb-stars{color:var(--gold);letter-spacing:1px;font-size:12px;}
+
+  .scroll-cue{
+    position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    color:var(--on-dark-soft); font-size:10px; letter-spacing:3px; text-transform:uppercase;
+    z-index:2;
+  }
+  .scroll-cue .line{width:1px;height:38px;background:linear-gradient(var(--gold),transparent);animation:scrollLine 2s infinite;}
+  @keyframes scrollLine{0%{opacity:0;transform:scaleY(0.2);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}100%{opacity:0;transform:scaleY(0.2);transform-origin:bottom;}}
+
+  /* ---------- MARQUEE STRIP ---------- */
+  .strip{
+    background:var(--rose-deep);
+    color:var(--on-dark);
+    padding:16px 0;
+    overflow:hidden;
+    white-space:nowrap;
+    position:relative;
+  }
+  .strip .track{display:inline-flex;gap:60px;animation:marquee 26s linear infinite;}
+  .strip span{
+    font-family:'Fraunces',serif; font-style:italic; font-size:15px;
+    display:inline-flex; align-items:center; gap:60px; letter-spacing:0.5px;
+  }
+  .strip span::after{content:'✦'; font-style:normal; color:var(--gold-soft); font-size:11px;}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- INTRO ---------- */
+  .intro{padding:130px 0 110px;}
+  .intro-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:80px;align-items:start;}
+  @media(max-width:900px){.intro-grid{grid-template-columns:1fr;gap:40px;}}
+  .intro h2{font-size:clamp(30px,3.6vw,46px);font-weight:300;line-height:1.22;margin-top:18px;}
+  .intro h2 em{font-style:italic;color:var(--rose-deep);font-weight:400;}
+  .intro-copy p{color:var(--ink-soft);font-size:16px;max-width:480px;margin-top:22px;}
+  .stat-row{display:flex;gap:48px;margin-top:48px;flex-wrap:wrap;}
+  .stat-row .stat b{
+    font-family:'Fraunces',serif;font-size:38px;font-weight:400;color:var(--rose-deep);display:block;
+  }
+  .stat-row .stat span{font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);}
+
+  /* ---------- SERVICES ---------- */
+  .services{
+    padding:120px 0;
+    background:var(--canvas-deep);
+    background-image:
+      radial-gradient(circle at 18% 20%, rgba(198,161,91,0.09), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(179,86,107,0.14), transparent 45%);
+    color:var(--on-dark);
+    position:relative;
+  }
+  .services .head{max-width:640px;margin:0 auto 70px;text-align:center;}
+  .services h2{color:var(--on-dark);font-size:clamp(32px,4vw,48px);font-weight:300;margin-top:18px;}
+  .services h2 em{font-style:italic;color:var(--gold-soft);}
+  .services p{color:var(--on-dark-soft);margin-top:16px;}
+  .head .eyebrow{justify-content:center;}
+  .head .eyebrow::before{display:none;}
+
+  .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hairline-dark);border:1px solid var(--hairline-dark);border-radius:18px;overflow:hidden;}
+  @media(max-width:960px){.service-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.service-grid{grid-template-columns:1fr;}}
+  .s-card{
+    background:var(--canvas-deep-2);
+    padding:42px 30px;
+    transition:background .4s var(--ease), transform .4s var(--ease);
+    position:relative;
+  }
+  .s-card:hover{background:#2E2115;transform:translateY(-4px);}
+  .s-card .num{font-family:'Fraunces',serif;font-style:italic;color:var(--gold);font-size:13px;letter-spacing:1px;}
+  .s-card h3{color:var(--on-dark);font-size:22px;font-weight:400;margin-top:22px;}
+  .s-card p{color:var(--on-dark-soft);font-size:14px;margin-top:12px;}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{padding:130px 0;}
+  .gallery .head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;gap:24px;flex-wrap:wrap;}
+  .gallery h2{font-size:clamp(30px,3.6vw,44px);font-weight:300;margin-top:14px;}
+  .gallery h2 em{font-style:italic;color:var(--rose-deep);}
+  .g-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:160px;gap:14px;}
+  @media(max-width:900px){.g-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px;}}
+  .g-item{
+    position:relative; border-radius:16px; overflow:hidden; cursor:pointer;
+    background:var(--canvas-deep);
+  }
+  .g-item img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease), filter .5s;}
+  .g-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(20,14,9,0.55));opacity:0;transition:opacity .4s;}
+  .g-item:hover img{transform:scale(1.08);}
+  .g-item:hover::after{opacity:1;}
+  .g-item span{
+    position:absolute;left:16px;bottom:14px;color:#fff;font-family:'Fraunces',serif;font-style:italic;
+    font-size:14px;opacity:0;transform:translateY(8px);transition:.4s;
+  }
+  .g-item:hover span{opacity:1;transform:translateY(0);}
+  .g1{grid-column:span 3;grid-row:span 2;}
+  .g2{grid-column:span 3;grid-row:span 2;}
+  .g3{grid-column:span 2;grid-row:span 1;}
+  .g4{grid-column:span 2;grid-row:span 1;}
+  .g5{grid-column:span 2;grid-row:span 1;}
+  @media(max-width:900px){.g1,.g2{grid-column:span 2;grid-row:span 2;}.g3,.g4,.g5{grid-column:span 1;grid-row:span 1;}}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{
+    padding:130px 0;
+    background:var(--canvas-warm);
+    position:relative;
+  }
+  .t-head{text-align:center;max-width:600px;margin:0 auto 60px;}
+  .t-head h2{font-size:clamp(30px,3.6vw,44px);font-weight:300;margin-top:16px;}
+  .t-head h2 em{font-style:italic;color:var(--rose-deep);}
+  .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  @media(max-width:900px){.t-grid{grid-template-columns:1fr;}}
+  .t-card{
+    background:var(--card); border-radius:20px; padding:36px 32px;
+    box-shadow:var(--shadow-card);
+    border:1px solid var(--hairline);
+  }
+  .t-card .stars{color:var(--gold);letter-spacing:3px;font-size:14px;}
+  .t-card p{font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.5;color:var(--ink);margin-top:18px;}
+  .t-card .who{display:flex;align-items:center;gap:12px;margin-top:24px;}
+  .t-card .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-size:14px;}
+  .t-card .who b{display:block;font-size:14px;}
+  .t-card .who span{font-size:12px;color:var(--ink-faint);}
+
+  .rating-summary{
+    margin-top:60px; display:flex; justify-content:center; align-items:center; gap:14px;
+    font-size:13px; color:var(--ink-soft); letter-spacing:0.5px;
+  }
+  .rating-summary .g-score{font-family:'Fraunces',serif;font-size:20px;color:var(--rose-deep);}
+  .rating-summary .g-stars{color:var(--gold);letter-spacing:2px;}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    position:relative;
+    padding:140px 0;
+    text-align:center;
+    color:var(--on-dark);
+    overflow:hidden;
+    background:var(--canvas-deep);
+  }
+  .cta-band-media{position:absolute;inset:0;z-index:0;background:var(--canvas-deep);}
+  .cta-band-media img{width:100%;height:100%;object-fit:cover;}
+  .cta-band-media::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(20,14,9,0.55), rgba(20,14,9,0.85));
+  }
+  .cta-band > *{position:relative;z-index:1;}
+  .cta-band .eyebrow{justify-content:center;}
+  .cta-band .eyebrow::before{display:none;}
+  .cta-band h2{color:var(--on-dark);font-size:clamp(32px,5vw,58px);font-weight:300;margin-top:20px;line-height:1.15;}
+  .cta-band h2 em{font-style:italic;color:var(--gold-soft);}
+  .cta-band .btns{margin-top:42px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{padding:130px 0;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;}
+  @media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:50px;}}
+  .contact h2{font-size:clamp(30px,3.6vw,44px);font-weight:300;margin-top:16px;}
+  .contact h2 em{font-style:italic;color:var(--rose-deep);}
+  .info-row{display:flex;gap:18px;padding:22px 0;border-top:1px solid var(--hairline);}
+  .info-row:last-child{border-bottom:1px solid var(--hairline);}
+  .info-row .ic{
+    width:42px;height:42px;border-radius:50%;background:var(--canvas-warm);
+    display:flex;align-items:center;justify-content:center;flex:none;color:var(--rose-deep);
+  }
+  .info-row b{display:block;font-size:14px;letter-spacing:0.5px;}
+  .info-row span{font-size:14px;color:var(--ink-soft);}
+
+  .map-frame{
+    border-radius:20px; overflow:hidden; border:1px solid var(--hairline);
+    box-shadow:var(--shadow-card); height:100%; min-height:420px;
+    background:var(--canvas-warm);
+  }
+  .map-frame iframe{width:100%;height:100%;min-height:420px;border:0;filter:saturate(0.9) contrast(1.02);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--canvas-deep);color:var(--on-dark-soft);padding:80px 0 30px;}
+  .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:50px;}
+  @media(max-width:900px){.f-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.f-grid{grid-template-columns:1fr;}}
+  footer .wordmark{color:var(--on-dark);margin-bottom:16px;}
+  footer p.lede{font-size:14px;max-width:280px;color:var(--on-dark-soft);}
+  footer h4{color:var(--on-dark);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-family:'Manrope',sans-serif;font-weight:700;margin-bottom:20px;}
+  footer ul li{margin-bottom:12px;}
+  footer ul li a{font-size:14px;color:var(--on-dark-soft);transition:color .3s;}
+  footer ul li a:hover{color:var(--gold-soft);}
+  .f-bottom{
+    margin-top:70px;padding-top:26px;border-top:1px solid var(--hairline-dark);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:12.5px;
+  }
+
+  .fade-target{will-change:opacity, transform;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  :focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  .map-card{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(179,86,107,0.10), transparent 45%),
+      radial-gradient(circle at 80% 80%, rgba(198,161,91,0.12), transparent 45%),
+      var(--canvas-warm);
+    text-align:center; padding:40px;
+  }
+  .map-card-pin{margin-bottom:6px;filter:drop-shadow(0 8px 14px rgba(42,32,25,0.25));}
+  .map-card-label{font-family:'Fraunces',serif;font-size:22px;color:var(--ink);}
+  .map-card-city{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:22px;}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="container">
+    <nav>
+      <a href="#top" class="wordmark">MICHEL<small>BEAUTY SALON · MANAMA</small></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Visit Us</a></li>
+        <li class="nav-cta nav-cta-mobile-only"><a href="#contact" class="btn btn-gold">Book Appointment</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-gold nav-cta">Book Appointment</a>
+      <div class="burger" id="burger" aria-label="Menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="assets/hero.webm" type="video/webm">
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-bg-scrim"></div>
+  <div class="container hero-inner">
+    <span class="eyebrow reveal in" style="color:var(--gold-soft);">Diplomatic Area · Manama, Bahrain</span>
+    <h1 class="reveal in reveal-delay-1">Timeless beauty, <em>masterfully crafted.</em></h1>
+    <p class="lede reveal in reveal-delay-2">Michel Salon is a hairstyling and nail atelier built around precision, patience, and a chair you'll want to keep coming back to — pedicure, manicure, hairstyling and extensions, done properly.</p>
+    <div class="hero-ctas reveal in reveal-delay-3">
+      <a href="#contact" class="btn btn-gold">Book an Appointment</a>
+      <a href="tel:+97317541445" class="btn btn-outline-dark">Call +973 1754 1445</a>
+      <div class="rating-badge">
+        <div class="rb-score">4.5</div>
+        <div class="rb-text">
+          <div class="rb-stars">★★★★★</div>
+          250 Google Reviews
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<div class="strip" aria-hidden="true">
+  <div class="track">
+    <span>HAIRSTYLING</span><span>MANICURE</span><span>PEDICURE</span><span>HAIR EXTENSIONS</span><span>BRIDAL STYLING</span><span>COLOR &amp; BALAYAGE</span>
+    <span>HAIRSTYLING</span><span>MANICURE</span><span>PEDICURE</span><span>HAIR EXTENSIONS</span><span>BRIDAL STYLING</span><span>COLOR &amp; BALAYAGE</span>
+  </div>
+</div>
+
+<section class="intro">
+  <div class="container intro-grid">
+    <div class="reveal fade-target">
+      <span class="eyebrow">The Salon</span>
+      <h2>An atelier for the <em>everyday client</em> and the once-in-a-lifetime occasion.</h2>
+    </div>
+    <div class="intro-copy reveal fade-target reveal-delay-1">
+      <p>Tucked into the Diplomatic Area, Michel Salon has spent years building a quieter kind of reputation — the kind earned one appointment at a time, not one campaign at a time. Every stylist and technician on the floor trains continuously, and every service is timed properly rather than rushed to fit a schedule.</p>
+      <p>Whether you're in for a wash-and-blow-dry between meetings or a full bridal transformation, the standard doesn't move.</p>
+      <div class="stat-row">
+        <div class="stat"><b>250+</b><span>Google Reviews</span></div>
+        <div class="stat"><b>4.5</b><span>Average Rating</span></div>
+        <div class="stat"><b>4</b><span>Core Services</span></div>
+        <div class="stat"><b>7</b><span>Days Open</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <div class="head reveal fade-target">
+      <span class="eyebrow">What We Do</span>
+      <h2>Services, done with <em>full attention.</em></h2>
+      <p>Four disciplines, each treated as a specialty rather than a menu item.</p>
+    </div>
+
+    <div class="service-grid">
+      <div class="s-card reveal fade-target">
+        <div class="num">01</div>
+        <h3>Hairstyling</h3>
+        <p>Cut, blow dry and finish for everyday wear or a special occasion.</p>
+      </div>
+      <div class="s-card reveal fade-target reveal-delay-1">
+        <div class="num">02</div>
+        <h3>Hair Extensions</h3>
+        <p>Volume, length and a blend matched seamlessly to your natural hair.</p>
+      </div>
+      <div class="s-card reveal fade-target reveal-delay-2">
+        <div class="num">03</div>
+        <h3>Manicure</h3>
+        <p>Shape, colour and a classic or gel finish done unhurried.</p>
+      </div>
+      <div class="s-card reveal fade-target reveal-delay-3">
+        <div class="num">04</div>
+        <h3>Pedicure</h3>
+        <p>A full spa pedicure ritual — soak, scrub, shape and polish.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="head">
+      <div class="reveal fade-target">
+        <span class="eyebrow">Inside the Salon</span>
+        <h2>A look <em>around the chair.</em></h2>
+      </div>
+      <a href="#contact" class="btn btn-outline-light reveal fade-target">Book a Visit</a>
+    </div>
+
+    <div class="g-grid">
+      <div class="g-item g1 reveal fade-target"><img src="assets/gallery_1.jpg" alt="Hair extensions work at Michel Salon"><span>Hair Extensions</span></div>
+      <div class="g-item g2 reveal fade-target reveal-delay-1"><img src="assets/gallery_2.jpg" alt="Manicure work at Michel Salon"><span>Manicure</span></div>
+      <div class="g-item g3 reveal fade-target reveal-delay-2"><img src="assets/gallery_3.jpg" alt="Pedicure work at Michel Salon"><span>Pedicure</span></div>
+      <div class="g-item g4 reveal fade-target reveal-delay-1"><img src="assets/gallery_4.jpg" alt="Hairstyling session at Michel Salon"><span>Hairstyling</span></div>
+      <div class="g-item g5 reveal fade-target reveal-delay-2"><img src="assets/cta.jpg" alt="A Michel Salon client"><span>Client Finish</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <div class="t-head reveal fade-target">
+      <span class="eyebrow" style="justify-content:center;">Client Reviews</span>
+      <h2>Two hundred and fifty appointments <em>worth of word-of-mouth.</em></h2>
+    </div>
+
+    <div class="t-grid">
+      <div class="t-card reveal fade-target">
+        <div class="stars">★★★★☆</div>
+        <p>"Clean studio, attentive staff, and a manicure that actually holds up for weeks. Worth the visit."</p>
+        <div class="who"><div class="avatar">A</div><div><b>Aisha K.</b><span>Manicure</span></div></div>
+      </div>
+      <div class="t-card reveal fade-target reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <p>"My go-to for hair extensions. The blend is seamless every single time — never obvious, always natural."</p>
+        <div class="who"><div class="avatar">R</div><div><b>Rana M.</b><span>Hair Extensions</span></div></div>
+      </div>
+      <div class="t-card reveal fade-target reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <p>"Consistently one of the best hairstyling experiences in Manama. Precise, unrushed, and the results always last."</p>
+        <div class="who"><div class="avatar">L</div><div><b>Layla H.</b><span>Hairstyling</span></div></div>
+      </div>
+    </div>
+
+    <div class="rating-summary reveal fade-target">
+      <span class="g-score">4.5</span>
+      <span class="g-stars">★★★★★</span>
+      <span>based on 250 Google reviews</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-band-media"><img src="assets/cta.jpg" alt="Michel Salon"></div>
+  <span class="eyebrow reveal fade-target">Ready When You Are</span>
+  <h2 class="reveal fade-target reveal-delay-1">Your chair is <em>waiting.</em></h2>
+  <div class="btns reveal fade-target reveal-delay-2">
+    <a href="tel:+97317541445" class="btn btn-gold">Call +973 1754 1445</a>
+    <a href="#contact" class="btn btn-outline-dark">Get Directions</a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="reveal fade-target">
+      <span class="eyebrow">Visit Us</span>
+      <h2>Find us in the <em>Diplomatic Area.</em></h2>
+
+      <div class="info-row">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><b>Address</b><span>Block 371, Building 1565, Road 1722, Diplomatic Area, Manama, Bahrain</span></div>
+      </div>
+      <div class="info-row">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div><b>Hours</b><span>Open Daily · Closes 8:00 PM</span></div>
+      </div>
+      <div class="info-row">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 1-2Z"/></svg></div>
+        <div><b>Phone</b><span>+973 1754 1445</span></div>
+      </div>
+      <div class="info-row">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
+        <div><b>Category</b><span>Beauty Salon · Diplomatic Area</span></div>
+      </div>
+
+      <a href="https://wa.me/97317541445" target="_blank" class="btn btn-outline-light" style="margin-top:30px;">Book on WhatsApp</a>
+    </div>
+
+    <div class="map-frame reveal fade-target reveal-delay-1">
+      <div class="map-card">
+        <div class="map-card-pin">
+          <svg width="30" height="40" viewBox="0 0 30 40" fill="none"><path d="M15 0C6.7 0 0 6.7 0 15c0 11.2 15 25 15 25s15-13.8 15-25C30 6.7 23.3 0 15 0z" fill="#C6A15B"/><circle cx="15" cy="15" r="6" fill="#241B10"/></svg>
+        </div>
+        <div class="map-card-label">Diplomatic Area</div>
+        <div class="map-card-city">Manama, Bahrain</div>
+        <a class="btn btn-gold" href="https://www.google.com/maps/search/?api=1&query=Block+371,+Building+1565,+Road+1722,+Diplomatic+Area,+Manama,+Bahrain" target="_blank" rel="noopener">Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <a href="#top" class="wordmark">MICHEL</a>
+        <p class="lede">A hairstyling, manicure, pedicure and extensions studio in the Diplomatic Area, Manama — 4.5★ from 250 clients and counting.</p>
+      </div>
+      <div>
+        <h4>Salon</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Hairstyling</a></li>
+          <li><a href="#services">Manicure &amp; Pedicure</a></li>
+          <li><a href="#services">Hair Extensions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+97317541445">+973 1754 1445</a></li>
+          <li><a href="#contact">Block 371, Road 1722, Manama</a></li>
+          <li><a href="#contact">Open Daily · Closes 8 PM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Michel Salon. All rights reserved.</span>
+      <span>Manama, Kingdom of Bahrain</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* ---- Hero video: force-start playback the moment it's actually ready,
+     instead of relying only on the autoplay attribute. On a fresh load the
+     browser can miss its one autoplay attempt while the file is still
+     buffering, then just leaves it paused with nothing to retry it. ---- */
+  const heroVideo = document.querySelector('.hero-bg-video');
+  if (heroVideo) {
+    const tryPlay = () => { heroVideo.play().catch(() => {}); };
+    tryPlay();
+    ['loadeddata','canplay','canplaythrough'].forEach(ev => heroVideo.addEventListener(ev, tryPlay));
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
+    ['click','touchstart','scroll','keydown'].forEach(ev =>
+      window.addEventListener(ev, tryPlay, { once: true, passive: true })
+    );
+  }
+
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  function toggleNav(){ navLinks.classList.toggle('open'); }
+  burger.addEventListener('click', toggleNav);
+  burger.addEventListener('keypress', (e) => { if(e.key === 'Enter') toggleNav(); });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-target').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
